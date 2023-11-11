@@ -18,3 +18,32 @@ function module_hero_theme($existing, $type, $theme, $path) {
   ];
 
 }
+
+/*
+ * Implement hook_form_alter.
+ */
+function module_hero_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+
+  if ($form_id == 'node_article_form') {
+    $form['field_tags']['#access'] = FALSE;
+    $form['title']['widget'][0]['value']['#title'] = t('Article title');
+    //kint($form); die;
+
+    $form['#validate'][] = '_module_hero_article_validate';
+  }
+}
+
+/**
+ * Our custom validation function.
+ */
+
+function _module_hero_article_validate(&$form, $form_state) {
+  kint($form_state->getValue('title')[0]['value']);
+  if (is_numeric($form_state->getValue('title')[0]['value'])) {
+    $form_state->setErrorByName('title', t('Tile should not be a number'));
+  }
+}
+
+function _module_hero_article(&$form, $form_state) {
+  kint($form_state->getValue('title'));
+}
