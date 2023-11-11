@@ -1,0 +1,6 @@
+name: "Module Hero"
+description: "Creating a Drupal module"
+type: module
+core_version_requirement: ^8 || ^9
+libraries:
+  - module_hero/hero-style
